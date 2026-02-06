@@ -6,6 +6,7 @@
     "lint": "spectral lint specs/v1/hrms-api.yaml --ruleset rulesets/.spectral.yaml",
     "docs:build": "npx redoc-cli bundle specs/v1/hrms-api.yaml -o docs/index.html",
     "docs:watch": "npx redoc-cli bundle specs/v1/hrms-api.yaml -o docs/index.html --watch",
+    "bundle": "redocly bundle specs/v1/hrms-api.yaml --output dist/openapi.json",
     "prepare": "npx husky init"
   },
   "keywords": [],
