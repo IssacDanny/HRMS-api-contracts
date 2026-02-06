@@ -7,7 +7,9 @@
 This repository serves as the **Single Source of Truth** for all API specifications within the AI Call Center ecosystem. It embodies the "API First" philosophy, ensuring that the contract between Backend and Frontend is defined, validated, and agreed upon before a single line of implementation code is written.
 
 **Owner:** Dinh Gia Kiet 
+
 **Enforcement:** Automated via [Spectral](https://stoplight.io/open-source/spectral)
+
 **Documentation:** Generated via [Redocly](https://redocly.com/)
 ---
 ## 🧐 How to start?
