@@ -1,0 +1,69 @@
+extends: ["spectral:oas"]
+
+rules:
+  #================================================================
+  # QUY TẮC 1: QUY TẮC ĐẶT TÊN URL (kebab-case)
+  # Style Guide: "Use kebab-case for Path Segments"
+  #================================================================
+  path-kebab-case:
+    description: "Các đường dẫn (paths) phải sử dụng định dạng kebab-case (ví dụ: /user-profiles)."
+    message: "{{property}} phải ở định dạng kebab-case."
+    given: "$.paths[*]~"
+    severity: "error"
+    then:
+      function: "pattern"
+      functionOptions:
+        # Matches: /users, /user-profiles, /users/{userId}
+        # Allows camelCase inside {} for parameters (e.g., {userId})
+        match: "^(\/([a-z0-9]+(-[a-z0-9]+)*|{[a-zA-Z0-9]+}))+$"
+
+  #================================================================
+  # QUY TẮC 2: QUY TẮC ĐẶT TÊN THUỘC TÍNH JSON (camelCase)
+  # Style Guide: "Use camelCase for Property Keys"
+  #================================================================
+  property-camel-case:
+    description: "Các thuộc tính (properties) trong JSON phải sử dụng định dạng camelCase."
+    message: "Thuộc tính '{{property}}' phải viết theo định dạng camelCase."
+    # STERLING IMPROVEMENT: Checks ALL properties anywhere in the file, not just components.
+    given: "$..properties[*]~"
+    severity: "error"
+    then:
+      function: "pattern"
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  #================================================================
+  # QUY TẮC 3: SỬ DỤNG ERROR RESPONSE CHUẨN
+  # Style Guide: "Provide a Consistent JSON Error Body"
+  #================================================================
+  error-response-schema-must-use-ref:
+    description: "Các phản hồi lỗi (4xx/5xx) phải tham chiếu đến schema ErrorResponse chuẩn."
+    message: "Phản hồi lỗi tại {{path}} phải sử dụng '$ref: \"#/components/schemas/ErrorResponse\"'."
+    # Checks 4xx and 5xx responses
+    given: "$.paths..responses[?(@property >= 400 && @property < 600)].content['application/json'].schema"
+    severity: "error"
+    then:
+      field: "$ref"
+      function: "pattern"
+      functionOptions:
+        match: "ErrorResponse"
+
+
+  #================================================================
+  # MỘT SỐ QUY TẮC KHÁC (Best Practices)
+  #================================================================
+  operation-summary-is-required:
+    description: "Mỗi operation phải có một 'summary' ngắn gọn."
+    given: "$.paths.*.*"
+    severity: "warn"
+    then:
+      field: "summary"
+      function: "truthy"
+
+  operation-tags-is-required:
+    description: "Mỗi operation phải có ít nhất một 'tag' để gom nhóm."
+    given: "$.paths.*.*"
+    severity: "warn"
+    then:
+      field: "tags"
+      function: "truthy"

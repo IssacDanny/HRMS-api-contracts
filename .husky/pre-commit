@@ -1,0 +1,13 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🧐 I am inspecting your API contract..."
+
+npm run lint
+
+if [ $? -ne 0 ]; then
+  echo "⛔ I says: The contract violates the Style Guide. Commit rejected."
+  exit 1
+fi
+
+echo "✅ I says: The contract is in order. Proceed."

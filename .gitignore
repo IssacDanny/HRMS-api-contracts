@@ -1,0 +1,6 @@
+node_modules
+.DS_Store
+dist
+# We ignore the generated docs locally, as the CI server builds them for us.
+docs/index.html
+docs/openapi.json

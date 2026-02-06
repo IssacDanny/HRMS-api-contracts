@@ -1,0 +1,59 @@
+name: "Publish API Documentation"
+
+# Trigger this workflow only when code is pushed (merged) to main
+on:
+  push:
+    branches: [ "main" ]
+  # Allow manual trigger for testing
+  workflow_dispatch:
+
+# Permissions required to deploy to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    name: "Build & Deploy Docs"
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # 1. Generate the HTML Documentation
+      - name: Build HTML Documentation
+        run: npm run docs:build
+
+      # 2. Bundle the JSON (The Machine Readable Contract)
+      # We place this in the docs folder so it can be downloaded via URL
+      - name: Bundle OpenAPI JSON
+        run: npx redocly bundle specs/v1/call-center.yaml --output docs/openapi.json
+
+      # 3. Setup GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # 4. Upload the 'docs' folder as an artifact
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs'
+
+      # 5. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
