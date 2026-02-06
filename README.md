@@ -104,8 +104,8 @@ When code is merged into the `main` branch, the **GitHub Actions** pipeline will
 3.  **Publish:** Deploy the HTML documentation to **GitHub Pages**.
 
 **Accessing the Docs:**
-*   **Human Readable:** `https://issacdanny.github.io/Human-Resoure-Management-System/`
-*   **Machine Readable:** `https://issacdanny.github.io/Human-Resoure-Management-System/openapi.json`
+*   **Human Readable:** `https://issacdanny.github.io/HRMS-api-contracts/`
+*   **Machine Readable:** `https://issacdanny.github.io/HRMS-api-contracts/openapi.json`
 
 ---
 
