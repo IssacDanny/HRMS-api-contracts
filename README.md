@@ -9,6 +9,14 @@ This repository serves as the **Single Source of Truth** for all API specificati
 **Owner:** Dinh Gia Kiet 
 **Enforcement:** Automated via [Spectral](https://stoplight.io/open-source/spectral)
 **Documentation:** Generated via [Redocly](https://redocly.com/)
+---
+## 🧐 How to start?
+
+If you are new and wish to understand the development process, then read the following document by order:
+1.  **[Các Nguyên tắc Thiết kế API (Guiding Principles)](./docs/01-GUIDING-PRINCIPLES.md):** The philosophy and core values behind our design decisions.
+2.  **[Hướng dẫn Thiết kế API (API Style Guide)](./docs/02-API-STYLE-GUIDE.md):** Specific rules for naming, structure, error handling, and other standards. **This is mandatory reading.**
+3.  **[Bộ công cụ Tiêu chuẩn (Tooling Standard)](./docs/03-TOOLING-STANDARD.md):** The tools we use for designing, documenting, mocking, and testing APIs.
+4.  **[Kế hoạch Triển khai (Implementation Plan)](./docs/04-IMPLEMENTATION-PLAN.md):** The step-by-step workflow the team follows for every new feature.
 
 ---
 
