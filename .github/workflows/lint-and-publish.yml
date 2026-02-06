@@ -41,7 +41,7 @@ jobs:
       # 2. Bundle the JSON (The Machine Readable Contract)
       # We place this in the docs folder so it can be downloaded via URL
       - name: Bundle OpenAPI JSON
-        run: npx redocly bundle specs/v1/call-center.yaml --output docs/openapi.json
+        run: npx redocly bundle specs/v1/hrms-api.yaml --output docs/openapi.json
 
       # 3. Setup GitHub Pages
       - name: Setup Pages
