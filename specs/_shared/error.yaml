@@ -1,0 +1,62 @@
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - traceId
+        - code
+        - message
+      properties:
+        traceId:
+          type: string
+          format: uuid
+          description: "Unique ID for request tracing."
+        code:
+          type: string
+          description: "Machine-readable error code."
+          example: "validation_error"
+        message:
+          type: string
+          description: "Human-readable error summary."
+          example: "The request failed validation."
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              issue:
+                type: string
+
+  responses:
+    BadRequest:
+      description: "Validation error or bad request."
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: "Missing or invalid authentication token."
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: "Insufficient permissions to access resource."
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: "The requested resource was not found."
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: "Unexpected server error."
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

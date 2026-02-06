@@ -1,0 +1,86 @@
+openapi: 3.0.3
+
+info:
+  title: "[New Service] API"
+  description: "API definition for [Service Purpose]."
+  version: "1.0.0"
+  contact:
+    name: "Platform Team"
+    email: "api-support@yourcompany.com"
+
+servers:
+  - url: "https://api.example.com/v1"
+    description: "Production"
+  - url: "https://api.staging.example.com/v1"
+    description: "Staging"
+
+# 1. GLOBAL SECURITY
+# References the shared security scheme defined below
+security:
+  - bearerAuth: []
+
+tags:
+  - name: "Example"
+    description: "Example operations."
+
+paths:
+  # ============================================================
+  # EXAMPLE RESOURCE (Delete this when starting)
+  # ============================================================
+  /examples:
+    get:
+      tags:
+        - "Example"
+      summary: "List Examples"
+      description: "Retrieve a paginated list of examples."
+      operationId: "listExamples"
+      parameters:
+        # 2. SHARED PAGINATION PARAMETERS
+        - $ref: './_shared/pagination.yaml#/components/parameters/LimitParam'
+        - $ref: './_shared/pagination.yaml#/components/parameters/AfterParam'
+      responses:
+        '200':
+          description: "Successful response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleConnection'
+        # 3. SHARED ERROR RESPONSES
+        '401':
+          $ref: './_shared/errors.yaml#/components/responses/Unauthorized'
+        '500':
+          $ref: './_shared/errors.yaml#/components/responses/InternalServerError'
+
+components:
+  # 4. IMPORT SHARED SECURITY SCHEME
+  securitySchemes:
+    bearerAuth:
+      $ref: './_shared/security.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    # Domain Schema (Local to this file)
+    ExampleResource:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+
+    # Pagination Wrapper (Local, but uses Shared PaginationInfo)
+    ExampleConnection:
+      type: object
+      required:
+        - data
+        - pagination
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExampleResource'
+        pagination:
+          $ref: './_shared/pagination.yaml#/components/schemas/PaginationInfo'

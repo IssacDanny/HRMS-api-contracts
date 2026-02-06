@@ -1,0 +1,30 @@
+components:
+  parameters:
+    LimitParam:
+      name: limit
+      in: query
+      description: "Max number of items to return (default 25, max 100)."
+      schema:
+        type: integer
+        default: 25
+        maximum: 100
+    AfterParam:
+      name: after
+      in: query
+      description: "Cursor for the next page."
+      schema:
+        type: string
+
+  schemas:
+    PaginationInfo:
+      type: object
+      required:
+        - hasNextPage
+      properties:
+        nextCursor:
+          type: string
+          nullable: true
+          description: "Opaque string to fetch the next page."
+        hasNextPage:
+          type: boolean
+          description: "Whether more data is available."
